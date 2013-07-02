@@ -1,0 +1,73 @@
+<project name="CodecMapper" default="dist" basedir=".">
+    <description>
+        Build codec mappings for Python.
+    </description>
+    <property name="python" value="python3" />
+    <property name="cpython" location="../cpython" />
+    <property name="source" location="source" />
+    <property name="build" location="build" />
+    <property name="dist" location="dist" />
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build}" />
+    </target>
+
+    <target name="compile" depends="init" description="compile the source ">
+        <javac srcdir="${source}" destdir="${build}" />
+    </target>
+
+    <target name="dist" depends="compile" description="generate the distribution">
+        <mkdir dir="${dist}" />
+        <jar jarfile="${dist}/CodecMapper.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="at.roskakori.codecmapper.CodecMapper" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean" description="clean up">
+        <delete>
+            <fileset dir="." includes="*.mapping, *.py, *.txt" />
+        </delete>
+        <delete dir="${build}" />
+        <mkdir dir="${build}" />
+        <delete dir="${dist}" />
+    </target>
+
+    <target name="ebcdic" description="build mappings for EBCDIC" depends="dist">
+        <java jar="${dist}/CodecMapper.jar" fork="true">
+            <arg value="cp037" />
+            <arg value="cp273" />
+            <arg value="cp277" />
+            <arg value="cp278" />
+            <arg value="cp280" />
+            <arg value="cp284" />
+            <arg value="cp285" />
+            <arg value="cp297" />
+            <arg value="cp500" />
+            <arg value="cp871" />
+            <arg value="cp1047" />
+            <arg value="cp1140" />
+            <arg value="cp1141" />
+            <arg value="cp1142" />
+            <arg value="cp1143" />
+            <arg value="cp1144" />
+            <arg value="cp1145" />
+            <arg value="cp1146" />
+            <arg value="cp1147" />
+            <arg value="cp1148" />
+            <arg value="cp1149" />
+        </java>
+        <exec executable="${python}" >
+            <arg value="${cpython}/Tools/unicode/gencodec.py" />
+            <arg value="." />
+        </exec>
+    </target>
+
+    <target name="list" description="list avaiable encodings" depends="dist">
+        <java jar="${dist}/CodecMapper.jar" fork="true">
+            <arg value="--list" />
+        </java>
+    </target>
+</project>
