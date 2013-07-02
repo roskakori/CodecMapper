@@ -14,7 +14,7 @@
     </target>
 
     <target name="compile" depends="init" description="compile the source ">
-        <javac srcdir="${source}" destdir="${build}" />
+        <javac srcdir="${source}" destdir="${build}" includeantruntime="false" />
     </target>
 
     <target name="dist" depends="compile" description="generate the distribution">
@@ -60,7 +60,7 @@
             <arg value="cp1149" />
         </java>
     </target>
- 
+
     <target name="gencodec" description="build Python codecs" depends="ebcdic">
         <!--
         Note: This target is somewhat clumsy as it also build codecs from
