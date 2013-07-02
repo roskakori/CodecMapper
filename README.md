@@ -21,27 +21,31 @@ Usage
 
 To build CodecMapper, run:
 
-  ant dist
+```sh
+$ ant dist
+```
 
 To generate a mapping file for a specific codec, run for example:
 
-  java -jar dist/CodecMapper.jar iso-8859-15
+```sh
+$ java -jar dist/CodecMapper.jar iso-8859-15
+```
 
-The resulting mapping file is stored in
-
-  iso-8859-15.txt
-
-The generated mapping files are located in the same folder and have names like
-cp037.txt.
+The resulting mapping file is stored in `iso-8859-15.txt`. The generated mapping files
+are located in the same folder and have names like
+`iso-8859.15.mapping`.
 
 To convert the mapping files to Python codecs, run
 
-  python3 .../cpython/Tools/unicode/gencodec.py .
+```sh
+$ python3 .../cpython/Tools/unicode/gencodec.py .
+```
 
 To build the example EBCDIC codecs, run:
 
-  ant ebcdic
-
+```sh
+$ ant ebcdic
+```
 
 Source code
 -----------
@@ -58,12 +62,12 @@ All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-    Redistributions of source code must retain the above copyright notice,
-    this list of conditions and the following disclaimer.
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
 
-    Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation
-    and/or other materials provided with the distribution.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
