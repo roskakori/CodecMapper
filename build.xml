@@ -59,7 +59,14 @@
             <arg value="cp1148" />
             <arg value="cp1149" />
         </java>
-        <exec executable="${python}" >
+    </target>
+ 
+    <target name="gencodec" description="build Python codecs" depends="ebcdic">
+        <!--
+        Note: This target is somewhat clumsy as it also build codecs from
+        build.xml, README.md and so on. You can simply ignore them.
+         -->
+        <exec executable="${python}">
             <arg value="${cpython}/Tools/unicode/gencodec.py" />
             <arg value="." />
         </exec>

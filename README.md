@@ -1,8 +1,8 @@
 CodecMapper
 ===========
 
-CodecMapper  Write mapping files derived from Java Charsets which can be
-processed by Python's gencodec.py.
+CodecMapper derives mapping files from Java Charsets which can be processed
+by Python's gencodec.py.
 
 
 Requirements
@@ -41,11 +41,24 @@ To convert the mapping files to Python codecs, run
 $ python3 .../cpython/Tools/unicode/gencodec.py .
 ```
 
-To build the example EBCDIC codecs, run:
+To build the example EBCDIC mapping files, run:
 
 ```sh
 $ ant ebcdic
 ```
+
+To convert the mapping files into Python codes, you can also try:
+
+```sh
+$ ant gencodec
+```
+
+If this target fails, you might have to change the properties `python` and
+`cpython` in `build.xml`.
+
+Also note that target is somewhat clumsy as it also build codecs from
+`build.xml`, `README.md` and so on. You can simply ignore them.
+
 
 Source code
 -----------
