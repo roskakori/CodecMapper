@@ -10,7 +10,7 @@ Requirements
 
 To build and run CodecMapper, you need:
 
-  1. Java 1.6 or later
+  1. Java 1.7 or later
   2. ant 1.8 or later, available from https://ant.apache.org/.
 
 It migth also work with earlier versions but has not been tested.
@@ -38,7 +38,7 @@ are located in the same folder and have names like
 To convert the mapping files to Python codecs, run
 
 ```sh
-$ python3 .../cpython/Tools/unicode/gencodec.py .
+$ python .../cpython/Tools/unicode/gencodec.py .
 ```
 
 To build the example EBCDIC mapping files, run:
@@ -69,7 +69,7 @@ See https://github.com/roskakori/CodecMapper.
 License
 -------
 
-Copyright (c) 2013, Thomas Aglassinger
+Copyright (c) 2013-2014, Thomas Aglassinger
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

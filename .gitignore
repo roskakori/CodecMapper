@@ -1,7 +1,12 @@
 *.class
 *.ear
+*.egg-info
 *.jar
+*.pyc
+*.pyo
 *.txt
 *.war
 build
 dist
+ebcdic/ebcdic/cp*.*
+ebcdic/ebcdic/temp/

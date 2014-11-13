@@ -2,7 +2,7 @@
     <description>
         Build codec mappings for Python.
     </description>
-    <property name="python" value="python3" />
+    <property name="python" value="python" />
     <property name="cpython" location="../cpython" />
     <property name="source" location="source" />
     <property name="build" location="build" />
@@ -27,16 +27,19 @@
     </target>
 
     <target name="clean" description="clean up">
-        <delete>
-            <fileset dir="." includes="*.mapping, *.py, *.txt" />
+        <delete includeemptydirs="true" quiet="true">
+            <fileset dir="${basedir}" includes="**.mapping, **/.pyc, **.pyo" />
+            <fileset dir="ebcdic/ebcdic" includes="cp*.*" />
         </delete>
-        <delete dir="${build}" />
+        <delete dir="ebcdic/ebcdic/temp" includeemptydirs="true" quiet="true" />
+        <delete dir="${build}" includeemptydirs="true" quiet="true" />
         <mkdir dir="${build}" />
-        <delete dir="${dist}" />
+        <delete dir="${dist}" includeemptydirs="true" quiet="true" />
     </target>
 
-    <target name="ebcdic" description="build mappings for EBCDIC" depends="dist">
-        <java jar="${dist}/CodecMapper.jar" fork="true">
+    <target name="ebcdic" description="build ebcdic package for Python" depends="dist">
+        <mkdir dir="ebcdic/ebcdic/temp" />
+        <java jar="${dist}/CodecMapper.jar" dir="ebcdic/ebcdic/temp" fork="true">
             <arg value="cp037" />
             <arg value="cp273" />
             <arg value="cp277" />
@@ -45,7 +48,9 @@
             <arg value="cp284" />
             <arg value="cp285" />
             <arg value="cp297" />
+            <!-- cp500 is already part of the Python standard library.
             <arg value="cp500" />
+            -->
             <arg value="cp871" />
             <arg value="cp1047" />
             <arg value="cp1140" />
@@ -59,16 +64,18 @@
             <arg value="cp1148" />
             <arg value="cp1149" />
         </java>
-    </target>
-
-    <target name="gencodec" description="build Python codecs" depends="ebcdic">
-        <!--
-        Note: This target is somewhat clumsy as it also build codecs from
-        build.xml, README.md and so on. You can simply ignore them.
-         -->
-        <exec executable="${python}">
+        <exec executable="${python}" dir="ebcdic/ebcdic" failonerror="true">
             <arg value="${cpython}/Tools/unicode/gencodec.py" />
-            <arg value="." />
+            <arg value="temp" />
+        </exec>
+        <delete includeemptydirs="true">
+            <fileset dir="ebcdic/ebcdic" includes="*.mapping, temp" />
+            <fileset dir="ebcdic/ebcdic/temp" />
+        </delete>
+        <exec executable="${python}" dir="ebcdic" failonerror="true">
+            <arg path="ebcdic/setup.py" />
+            <arg value="sdist" />
+            <arg value="--formats=zip" />
         </exec>
     </target>
 
@@ -76,5 +83,12 @@
         <java jar="${dist}/CodecMapper.jar" fork="true">
             <arg value="--list" />
         </java>
+    </target>
+
+    <target name="test" description="run test suite" depends="ebcdic">
+        <exec executable="${python}" dir="ebcdic" failonerror="true">
+            <arg path="ebcdic/setup.py" />
+            <arg value="test" />
+        </exec>
     </target>
 </project>
