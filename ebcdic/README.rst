@@ -102,11 +102,13 @@ Changes
 -------
 
 Version 0.6, 2014-11-15
-* Added support for Python 3.1+.
-* Included a modified version of gencodec that still builds maps instead of
-  tables so the generated codecs work with Python version earlier than 3.3.
-  This also simplifies building the codecs because it removes the the need
-  for a local copy of the cpython source code.
+* Added support for Python 2.6+ and 3.1+ (#1).
+* Included a modified version of `gencodec.py` that still builds maps instead
+  of tables so the generated codecs work with Python version earlier than 3.3.
+  It also does a `from __future__ import unicode_literals` so the codecs even
+  work with Python 2.6+ using the same source code. As a side effect, this
+  simplifies building the codecs because it removes the the need for a local
+  copy of the cpython source code.
 
 Version 0.5, 2014-11-13
 * Initial public release

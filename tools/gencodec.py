@@ -280,6 +280,8 @@ def codegen(name, map, encodingname, comments=1):
 """ Python Character Mapping Codec %s generated from '%s' with gencodec.py.
 
 """#"
+# Ensure the generated codec works with Python 2.6+.
+from __future__ import unicode_literals
 
 import codecs
 
