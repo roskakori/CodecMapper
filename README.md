@@ -13,8 +13,8 @@ To build and run CodecMapper, you need:
   1. Java 1.7 or later
   2. ant 1.8 or later, available from https://ant.apache.org/.
 
-It migth also work with earlier versions but has not been tested.
-  
+It might also work with earlier versions of ant but this has not been tested.
+
 
 Usage
 -----
@@ -35,29 +35,14 @@ The resulting mapping file is stored in `iso-8859-15.txt`. The generated mapping
 are located in the same folder and have names like
 `iso-8859.15.mapping`.
 
-To convert the mapping files to Python codecs, run
+EBCDIC codecs for Python
+------------------------
 
-```sh
-$ python .../cpython/Tools/unicode/gencodec.py .
-```
+As an example usage, CodecMapper can provide additional EBCDIC codecs for
+Python, which can easily be packaged and distributed.
 
-To build the example EBCDIC mapping files, run:
-
-```sh
-$ ant ebcdic
-```
-
-To convert the mapping files into Python codes, you can also try:
-
-```sh
-$ ant gencodec
-```
-
-If this target fails, you might have to change the properties `python` and
-`cpython` in `build.xml`.
-
-Also note that target is somewhat clumsy as it also build codecs from
-`build.xml`, `README.md` and so on. You can simply ignore them.
+For more information, browse the "ebcdic" folder of this distribution and
+take a look at the README.rst.
 
 
 Source code

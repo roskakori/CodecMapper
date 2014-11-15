@@ -34,7 +34,7 @@ For more information, visit <https://pypi.python.org/pypi/ebcdic/>.
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from __future__ import absolute_import
 
-__version_info__ = (0, 5, 0)
+__version_info__ = (0, 6, 0)
 __version__ = '.'.join([str(item) for item in __version_info__])
 
 

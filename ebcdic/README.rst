@@ -29,12 +29,12 @@ Python already ships with the following EBCDIC codec:
 
 * cp500 - international (without Euro sign)
 
-The ebcdic package currently adds:
+The `ebcdic` package currently adds:
 
 * cp1140 - Australia, Brazil, Canada, New Zealand, Portugal, South Africa,
   USA
 * cp1141 - Germany, Austria
-* cp1142 - Danmark, Norway
+* cp1142 - Denmark, Norway
 * cp1143 - Finland, Sweden
 * cp1144 - Italy
 * cp1145 - Latin America, Spain
@@ -64,15 +64,10 @@ These codecs have been generated using CodecMapper available from
 https://github.com/roskakori/CodecMapper. Read the README in order to
 to build the ebcdic package from source.
 
-To add another 8 bit EBCDIC encoding just extend the ant target `ebcdic` in
+To add another 8 bit EBCDIC codec just extend the ant target `ebcdic` in
 `build.xml` using a  line like::
 
    <arg value="cpXXX" />
-
-
-
-Adding additional codecs
-------------------------
 
 
 License
@@ -102,3 +97,16 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+Changes
+-------
+
+Version 0.6, 2014-11-15
+* Added support for Python 3.1+.
+* Included a modified version of gencodec that still builds maps instead of
+  tables so the generated codecs work with Python version earlier than 3.3.
+  This also simplifies building the codecs because it removes the the need
+  for a local copy of the cpython source code.
+
+Version 0.5, 2014-11-13
+* Initial public release
