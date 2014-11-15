@@ -102,6 +102,7 @@ Changes
 -------
 
 Version 0.6, 2014-11-15
+
 * Added support for Python 2.6+ and 3.1+ (#1).
 * Included a modified version of `gencodec.py` that still builds maps instead
   of tables so the generated codecs work with Python version earlier than 3.3.
@@ -111,4 +112,5 @@ Version 0.6, 2014-11-15
   copy of the cpython source code.
 
 Version 0.5, 2014-11-13
+
 * Initial public release
