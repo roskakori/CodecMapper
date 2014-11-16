@@ -5,22 +5,20 @@ For more information, visit <https://pypi.python.org/pypi/ebcdic/>.
 """
 # Copyright (c) 2014, Thomas Aglassinger
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
 # met:
-# 
+#
 # * Redistributions of source code must retain the above copyright notice,
 #   this list of conditions and the following disclaimer.
-# 
 # * Redistributions in binary form must reproduce the above copyright
 #   notice, this list of conditions and the following disclaimer in the
 #   documentation and/or other materials provided with the distribution.
-# 
 # * Neither the name of Thomas Aglassinger nor the names of its
 #   contributors may be used to endorse or promote products derived from
 #   this software without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
 # IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 # TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -33,14 +31,23 @@ For more information, visit <https://pypi.python.org/pypi/ebcdic/>.
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from __future__ import absolute_import
+import codecs
 
-__version_info__ = (0, 6, 0)
+
+__all__ = [
+    'codec_names',
+    'ignored_codec_names',
+    'lookup',
+    '__version__',
+    '__version_info__'
+]
+__version_info__ = (0, 7, 0)
 __version__ = '.'.join([str(item) for item in __version_info__])
 
 
 def _codec_names():
     """
-    Names of codecs included in the ebcdic package.
+    Names of the codecs included in the ebcdic package.
     """
     import glob
     import os.path
@@ -51,18 +58,45 @@ def _codec_names():
         yield codec_name
 
 
-def _register_codecs():
-    """
-    Register all codecs for which an 'cp*.py' can be found.
-    """
-    import codecs
-
-    codec_name_to_info_map = {}
+def _create_codec_name_to_info_map():
+    result = {}
     for codec_name in codec_names:
         codec_module = __import__('ebcdic.' + codec_name, globals(), locals(), ['getregentry'])
-        codec_name_to_info_map[codec_name] = codec_module.getregentry()
-    codecs.register(lambda name: codec_name_to_info_map.get(name))
+        result[codec_name] = codec_module.getregentry()
+    return result
 
 
+def _find_ebcdic_codec(code_name):
+    """
+    The `codec.CodecInfo` matching `codec_name` provided it is part of the
+    package, otherwise `None`.
+    """
+    return _codec_name_to_info_map.get(code_name)
+
+
+def ignored_codec_names():
+    """
+    A list of codec names in this package that are ignored because they are
+    already provided by other means, e.g. the standard library.
+    """
+    return [codec_name
+            for codec_name, codec_info in sorted(_codec_name_to_info_map.items())
+            if codec_info != codecs.lookup(codec_name)
+    ]
+
+
+def lookup(codec_name):
+    """
+    The `codecs.CodecInfo` for the EBCDIC codec `codec_name`. An unknown
+    `codecs_name` raises a `LookupError`.
+    """
+    result = _find_ebcdic_codec(codec_name)
+    if result is None:
+        raise LookupError('EBCDIC codec is %r but must be one of: %s' % (codec_name, codec_names))
+    return result
+
+
+# Names of the codecs included in the ebcdic package.
 codec_names = sorted(_codec_names())
-_register_codecs()
+_codec_name_to_info_map = _create_codec_name_to_info_map()
+codecs.register(_find_ebcdic_codec)

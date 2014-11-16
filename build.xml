@@ -47,9 +47,7 @@
             <arg value="cp284" />
             <arg value="cp285" />
             <arg value="cp297" />
-            <!-- Note: cp500 is already part of the Python standard library.
             <arg value="cp500" />
-            -->
             <arg value="cp871" />
             <arg value="cp1047" />
             <arg value="cp1140" />

@@ -1,8 +1,14 @@
 ebcdic
 ======
 
-Ebcdic is a Python package adding additional EBCDIC encodings for data
-exchange with legacy system. It works with Python 2.6+ and Python 3.2+.
+Ebcdic is a Python package adding additional EBCDIC codecs for data
+exchange with legacy system. It works with Python 2.6+ and Python 3.1+.
+
+EBCDIC is short for Extended Binary Coded Decimal Interchange Code and is
+a family of character encodings that is mainly used on mainframe computers.
+There is no real point in using it unless you have to exchange data with
+legacy systems that still require it. To learn more about EBCDIC, you can
+start at <https://en.wikipedia.org/wiki/EBCDIC>.
 
 
 Installation
@@ -17,44 +23,58 @@ installed using pip::
 Example usage
 -------------
 
->>> import ebcdic
->>> 'hello world'.encode('cp1141')
-b'\x88\x85\x93\x93\x96@\xa6\x96\x99\x93\x84O'
+To encode `'hello world'` EBCDIC systems in German speaking countries, use::
+
+  >>> import ebcdic
+  >>> 'hello world'.encode('cp1141')
+  b'\x88\x85\x93\x93\x96@\xa6\x96\x99\x93\x84O'
 
 
 Supported codecs
 ----------------
 
-Python already ships with the following EBCDIC codec:
+  USA (without Euro sign)
 
-* cp500 - international (without Euro sign)
-
-The `ebcdic` package currently adds:
+The `ebcdic` package adds:
 
 * cp1140 - Australia, Brazil, Canada, New Zealand, Portugal, South Africa,
   USA
-* cp1141 - Germany, Austria
+* cp1141 - Austria, Germany, Switzerland
 * cp1142 - Denmark, Norway
 * cp1143 - Finland, Sweden
 * cp1144 - Italy
 * cp1145 - Latin America, Spain
 * cp1146 - Great Britain, Ireland, North Ireland
-* cp1147 - France
+* cp1047 - France
 * cp1148 - international
 * cp1149 - Iceland
 
-It also adds legacy codecs that do not include the Euro sign:
+It also adds legacy codecs:
 
-* cp037 - similar to cp1140
-* cp273 - similar to cp1141
-* cp277 - similar to cp1142
-* cp278 - similar to cp1143
-* cp280 - similar to cp1144
-* cp284 - similar to cp1145
-* cp285 - similar to cp1146
-* cp297 - similar to cp1147
-* cp871 - similar to cp1149
+* cp037 - Australia, Brazil, Canada, New Zealand, Portugal, South Africa;
+  similar to cp1140 but without Euro sign
+* cp273 - Austria, Germany, Switzerland; similar to cp1141 but without Euro
+  sign
+* cp277 - Denmark, Norway; similar to cp1142 but without Euro sign
+* cp278 - Finland, Sweden; similar to cp1143 but without Euro sign
+* cp280 - Italy; similar to cp1141 but without Euro sign
+* cp284 - Latin America, Spain; similar to cp1145 but without Euro sign
+* cp285 - Great Britain, Ireland, North Ireland; similar to cp1146 but
+  without Euro sign
+* cp297 - France; similar to cp1047 but without Euro sign
+* cp500 - international; similar to cp1140 but without Euro sign
+* cp871 - Iceland; similar to cp1149 but without Euro sign
 * cp1047 - Open Systems (MVS C compiler)
+
+Codecs in the standard library overrule these codecs. At the time of this
+writing this concerns cp037, cp273 (since 3.4), cp500 and cp1140.
+
+To see get a list of EBCDIC codecs that are already provided by different
+sources, use `ebcdic.ignored_code_names()`. For example, with Python 3.4::
+
+  >>> ebcdic.ignored_codec_names()
+  ['cp037', 'cp1140', 'cp273', 'cp500']
+
 
 
 Source code
@@ -98,8 +118,19 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
+
 Changes
 -------
+
+Version 0.7, 2014-11-17
+
+* Clarified which codecs are already part if the standard library and that
+  these codecs overrule the `ebcdic` package. Also added a function
+  `ebcdic.ignored_code_names()` that returns the name of the EBCDIC codecs
+  provided by other means. To obtain access to `ebcdic` codecs overruled by
+  the standard library, use `ebcdic.lookup()`.
+* Cleaned up (PEP8, __all__, typos, ...).
+
 
 Version 0.6, 2014-11-15
 
@@ -110,6 +141,7 @@ Version 0.6, 2014-11-15
   work with Python 2.6+ using the same source code. As a side effect, this
   simplifies building the codecs because it removes the the need for a local
   copy of the cpython source code.
+
 
 Version 0.5, 2014-11-13
 
