@@ -41,5 +41,5 @@ setup(
     ],
     keywords='codec text unicode ebcdic',
     packages=['ebcdic'],
-    test_suite = 'ebcdic.test.test_ebcdic'
+    test_suite='ebcdic.test.test_ebcdic'
 )

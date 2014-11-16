@@ -84,7 +84,19 @@
         </java>
     </target>
 
-    <target name="test" description="run test suite" depends="ebcdic">
+    <target name="pep8" description="validate Python code style">
+        <exec executable="pep8" failonerror="true">
+            <arg path="ebcdic/setup.py" />
+            <arg value="--config" />
+            <arg path="ebcdic/setup.cfg" />
+            <arg value="--max-line-length=120" />
+            <arg path="ebcdic/setup.py" />
+            <arg path="ebcdic/ebcdic/__init__.py" />
+            <arg path="ebcdic/ebcdic/test/test_ebcdic.py" />
+        </exec>
+    </target>
+
+    <target name="test" description="run test suite" depends="ebcdic, pep8">
         <exec executable="${python}" dir="ebcdic" failonerror="true">
             <arg path="ebcdic/setup.py" />
             <arg value="test" />
