@@ -23,7 +23,8 @@ installed using pip::
 Example usage
 -------------
 
-To encode `'hello world'` EBCDIC systems in German speaking countries, use::
+To encode `'hello world'` on EBCDIC systems in German speaking countries,
+use::
 
   >>> import ebcdic
   >>> 'hello world'.encode('cp1141')
@@ -33,9 +34,7 @@ To encode `'hello world'` EBCDIC systems in German speaking countries, use::
 Supported codecs
 ----------------
 
-  USA (without Euro sign)
-
-The `ebcdic` package adds:
+The `ebcdic` package includes EBCDIC codecs for the following regions:
 
 * cp1140 - Australia, Brazil, Canada, New Zealand, Portugal, South Africa,
   USA
@@ -45,11 +44,11 @@ The `ebcdic` package adds:
 * cp1144 - Italy
 * cp1145 - Latin America, Spain
 * cp1146 - Great Britain, Ireland, North Ireland
-* cp1047 - France
+* cp1147 - France
 * cp1148 - international
 * cp1149 - Iceland
 
-It also adds legacy codecs:
+It also includes legacy codecs:
 
 * cp037 - Australia, Brazil, Canada, New Zealand, Portugal, South Africa;
   similar to cp1140 but without Euro sign
@@ -61,13 +60,13 @@ It also adds legacy codecs:
 * cp284 - Latin America, Spain; similar to cp1145 but without Euro sign
 * cp285 - Great Britain, Ireland, North Ireland; similar to cp1146 but
   without Euro sign
-* cp297 - France; similar to cp1047 but without Euro sign
+* cp297 - France; similar to cp1147 but without Euro sign
 * cp500 - international; similar to cp1140 but without Euro sign
 * cp871 - Iceland; similar to cp1149 but without Euro sign
 * cp1047 - Open Systems (MVS C compiler)
 
-Codecs in the standard library overrule these codecs. At the time of this
-writing this concerns cp037, cp273 (since 3.4), cp500 and cp1140.
+Codecs in the standard library overrule some of these codecs. At the time of
+this writing this concerns cp037, cp273 (since 3.4), cp500 and cp1140.
 
 To see get a list of EBCDIC codecs that are already provided by different
 sources, use `ebcdic.ignored_code_names()`. For example, with Python 3.4::
@@ -124,7 +123,7 @@ Changes
 
 Version 0.7, 2014-11-17
 
-* Clarified which codecs are already part if the standard library and that
+* Clarified which codecs are already part of the standard library and that
   these codecs overrule the `ebcdic` package. Also added a function
   `ebcdic.ignored_code_names()` that returns the name of the EBCDIC codecs
   provided by other means. To obtain access to `ebcdic` codecs overruled by
