@@ -239,11 +239,12 @@ def python_tabledef_code(varname, map, comments=1, key_precision=2):
             else:
                 mapchar = chr(mapvalue)
         if mapcomment and comments:
-            append('    %a \t#  %s -> %s' % (mapchar,
+            mapchar_as_source = ascii(mapchar)
+            append('    %s \t#  %s -> %s' % (mapchar_as_source,
                                             hexrepr(key, key_precision),
                                             mapcomment))
         else:
-            append('    %a' % mapchar)
+            append('    %s' % mapchar_as_source)
 
     append(')')
     return l

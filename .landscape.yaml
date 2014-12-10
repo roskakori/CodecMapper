@@ -1,0 +1,3 @@
+# Settings for https://landscape.io.
+ignore-paths:
+    - tools/gencodec.py
