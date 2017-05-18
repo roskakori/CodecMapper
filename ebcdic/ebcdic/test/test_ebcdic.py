@@ -1,13 +1,14 @@
 """
 Basic test for `ebcdic` package.
 """
-from __future__ import absolute_import
+
 
 import codecs
 import sys
 import unittest
 
 import ebcdic
+import six
 
 _IS_PYTHON2 = sys.version_info[0] == 2
 
@@ -44,7 +45,7 @@ class EbcdicTest(unittest.TestCase):
     def test_ignored_codecs_are_identical_to_standard_library(self):
         def encoded(code, codec):
             if _IS_PYTHON2:
-                result = unicode(chr(code), codec.name, errors='replace')
+                result = six.text_type(chr(code), codec.name, errors='replace')
             else:
                 result = chr(code).encode(codec.name, errors='replace')
 
