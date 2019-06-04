@@ -21,14 +21,16 @@ class EbcdicTest(unittest.TestCase):
         self.assertTrue('cp1141' in ebcdic.codec_names)
 
     def test_can_recode_hello_world(self):
-        text = 'hello world'
-        expected_encoded_text = b'\x88\x85\x93\x93\x96@\xa6\x96\x99\x93\x84'
-        for codec_name in ebcdic.codec_names:
+        self._test_can_recode('hello world', ebcdic.codec_names)
+
+    def _test_can_recode(self, text, codec_names):
+        for codec_name in codec_names:
             encoded_text = text.encode(codec_name)
-            self.assertEqual(expected_encoded_text, encoded_text,
-                             '%s: %r != %r' % (codec_name, expected_encoded_text, encoded_text))
             recoded_text = encoded_text.decode(codec_name)
             self.assertEqual(text, recoded_text, '%s: %r != %r' % (codec_name, text, recoded_text))
+
+    def test_can_recode_euro_sign(self):
+        self._test_can_recode('\N{EURO SIGN}', ['cp1141', 'cp1148'])
 
     def test_has_ignored_codec_names(self):
         self.assertTrue('cp500' in ebcdic.ignored_codec_names())
