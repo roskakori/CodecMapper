@@ -2,104 +2,138 @@
     <description>
         Build CodecMapper and additional codecs for Python.
     </description>
-    <property name="python" value="python" />
-    <property name="source" location="source" />
-    <property name="build" location="build" />
-    <property name="dist" location="dist" />
+    <property name="python" value="${basedir}/venv/bin/python"/>
+    <property name="source" location="source"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
 
     <target name="init">
-        <tstamp />
-        <mkdir dir="${build}" />
+        <tstamp/>
+        <mkdir dir="${build}"/>
     </target>
 
     <target name="compile" depends="init" description="compile the source ">
-        <javac srcdir="${source}" destdir="${build}" includeantruntime="false" />
+        <javac srcdir="${source}" destdir="${build}" includeantruntime="false"/>
     </target>
 
     <target name="dist" depends="compile" description="generate the distribution">
-        <mkdir dir="${dist}" />
-        <jar jarfile="${dist}/CodecMapper.jar" basedir="${build}">
+        <mkdir dir="${dist}"/>
+        <jar destfile="${dist}/CodecMapper.jar" basedir="${build}">
             <manifest>
-                <attribute name="Main-Class" value="at.roskakori.codecmapper.CodecMapper" />
+                <attribute name="Main-Class" value="at.roskakori.codecmapper.CodecMapper"/>
             </manifest>
         </jar>
     </target>
 
     <target name="clean" description="clean up">
+        <delete dir="${build}" includeemptydirs="true" quiet="true"/>
+        <mkdir dir="${build}"/>
+        <delete dir="${dist}" includeemptydirs="true" quiet="true"/>
         <delete includeemptydirs="true" quiet="true">
-            <fileset dir="${basedir}" includes="**.mapping, **/.pyc, **.pyo" />
-            <fileset dir="ebcdic/ebcdic" includes="cp*.*" />
+            <fileset dir="${basedir}" includes="**.mapping, **/.pyc, **.pyo, __pycache__"/>
+            <fileset dir="ebcdic/ebcdic" includes="cp*.*"/>
         </delete>
-        <delete dir="ebcdic/ebcdic/temp" includeemptydirs="true" quiet="true" />
-        <delete dir="${build}" includeemptydirs="true" quiet="true" />
-        <mkdir dir="${build}" />
-        <delete dir="${dist}" includeemptydirs="true" quiet="true" />
+        <delete dir="ebcdic/ebcdic/temp" includeemptydirs="true" quiet="true"/>
+        <exec executable="${python}" dir="ebcdic" failonerror="true">
+            <arg path="ebcdic/setup.py"/>
+            <arg value="clean"/>
+        </exec>
     </target>
 
     <target name="ebcdic" description="build ebcdic package for Python" depends="dist">
-        <mkdir dir="ebcdic/ebcdic/temp" />
-        <java jar="${dist}/CodecMapper.jar" dir="ebcdic/ebcdic/temp" fork="true">
-            <arg value="cp037" />
-            <arg value="cp273" />
-            <arg value="cp277" />
-            <arg value="cp278" />
-            <arg value="cp280" />
-            <arg value="cp284" />
-            <arg value="cp285" />
-            <arg value="cp297" />
-            <arg value="cp500" />
-            <arg value="cp871" />
-            <arg value="cp1047" />
-            <arg value="cp1140" />
-            <arg value="cp1141" />
-            <arg value="cp1142" />
-            <arg value="cp1143" />
-            <arg value="cp1144" />
-            <arg value="cp1145" />
-            <arg value="cp1146" />
-            <arg value="cp1147" />
-            <arg value="cp1148" />
-            <arg value="cp1149" />
+        <mkdir dir="ebcdic/ebcdic/temp"/>
+        <java jar="${dist}/CodecMapper.jar" dir="ebcdic/ebcdic/temp" failonerror="true" fork="true">
+            <arg value="cp037"/>
+            <!-- <arg value="cp256" /> --><!-- Unavailable: Netherland -->
+            <arg value="cp273"/>
+            <!-- <arg value="cp275" /> --><!-- Unavailable: Brazil -->
+            <arg value="cp277"/>
+            <arg value="cp278"/>
+            <arg value="cp280"/>
+            <!-- <arg value="cp282" /> --><!-- Unavailable: Portugal -->
+            <arg value="cp284"/>
+            <arg value="cp285"/>
+            <arg value="cp290"/> <!-- Japanese with Katakana -->
+            <arg value="cp297"/>
+            <!-- <arg value="cp298" /> --> <!-- Unavailable: Japanese with Katakana -->
+            <!-- <arg value="cp322" /> --><!-- Unavailable: Turkey -->
+            <!-- <arg value="cp410" /> --><!-- Unavailable: Cyrillic -->
+            <arg value="cp420"/>
+            <!-- <arg value="cp421" /> --><!-- Unavailable: Maghreb/French -->
+            <arg value="cp424"/>
+            <!-- <arg value="cp425" /> --><!-- Unavailable: Arabic/Latin -->
+            <arg value="cp500"/>
+            <!-- <arg value="cp803" /> --><!-- Unavailable: Hebrew -->
+            <arg value="cp833"/>
+            <!-- <arg value="cp834" /> --><!-- TODO: Korea (16 Bit) -->
+            <arg value="cp870"/>
+            <arg value="cp871"/>
+            <arg value="cp875"/>
+            <!-- <arg value="cp880" /> --><!-- Unavailable: Cyrillic -->
+            <!-- <arg value="cp905" /> --><!-- Unavailable: Turkey -->
+            <arg value="cp1025"/>
+            <arg value="cp1047"/>
+            <arg value="cp1097"/>
+            <arg value="cp1112"/>
+            <arg value="cp1122"/>
+            <arg value="cp1123"/>
+            <arg value="cp1140"/>
+            <arg value="cp1141"/>
+            <arg value="cp1142"/>
+            <arg value="cp1143"/>
+            <arg value="cp1144"/>
+            <arg value="cp1145"/>
+            <arg value="cp1146"/>
+            <arg value="cp1147"/>
+            <arg value="cp1148"/>
+            <arg value="cp1149"/>
+            <!-- <arg value="cp1153" /> --><!-- Unavailable: Latin-2 EBCDIC -->
+            <!-- <arg value="cp1154" /> --><!-- Unavailable: Cyrillic (with Euro) -->
+            <!-- <arg value="cp1156" /> --><!-- Unavailable: Estonia, Latvia, Lithuania (Baltic) (with Euro) -->
+            <!-- <arg value="cp1157" /> --><!-- Unavailable: Estonia -->
+            <!-- <arg value="cp1158" /> --><!-- Unavailable: Ukraine -->
+            <!-- <arg value="cp4971" /> --><!-- Unavailable: Greece -->
+            <!-- <arg value="cp9067" /> --><!-- Unavailable: Greece -->
         </java>
         <exec executable="${python}" dir="ebcdic/ebcdic" failonerror="true">
-            <arg value="${basedir}/tools/gencodec.py" />
-            <arg value="temp" />
+            <arg value="${basedir}/tools/gencodec.py"/>
+            <arg value="temp"/>
         </exec>
         <delete includeemptydirs="true">
-            <fileset dir="ebcdic/ebcdic" includes="*.mapping, temp" />
-            <fileset dir="ebcdic/ebcdic/temp" />
+            <fileset dir="ebcdic/ebcdic" includes="*.mapping, temp"/>
+            <fileset dir="ebcdic/ebcdic/temp"/>
         </delete>
         <exec executable="${python}" dir="ebcdic" failonerror="true">
-            <arg path="ebcdic/setup.py" />
-            <arg value="sdist" />
-            <arg value="--dist-dir" />
-            <arg path="${dist}" />
-            <arg value="--formats=zip" />
+            <arg path="ebcdic/setup.py"/>
+            <arg value="sdist"/>
+            <arg value="--dist-dir"/>
+            <arg path="${dist}"/>
+            <arg value="--formats=zip"/>
         </exec>
     </target>
 
     <target name="list" description="list available encodings" depends="dist">
         <java jar="${dist}/CodecMapper.jar" fork="true">
-            <arg value="--list" />
+            <arg value="--list"/>
         </java>
     </target>
 
     <target name="pep8" description="validate Python code style">
-        <exec executable="pep8" failonerror="true">
-            <arg path="ebcdic/setup.py" />
-            <arg value="--config" />
-            <arg path="ebcdic/setup.cfg" />
-            <arg value="--max-line-length=120" />
-            <arg path="ebcdic/setup.py" />
-            <arg path="ebcdic/ebcdic/__init__.py" />
-            <arg path="ebcdic/ebcdic/test/test_ebcdic.py" />
+        <exec executable="pycodestyle" failonerror="true">
+            <arg path="ebcdic/setup.py"/>
+            <arg value="--config"/>
+            <arg path="ebcdic/setup.cfg"/>
+            <arg value="--max-line-length=120"/>
+            <arg path="ebcdic/setup.py"/>
+            <arg path="ebcdic/ebcdic/__init__.py"/>
+            <arg path="ebcdic/ebcdic/test/test_ebcdic.py"/>
         </exec>
     </target>
 
     <target name="test" description="run test suite" depends="ebcdic, pep8">
         <exec executable="${python}" dir="ebcdic" failonerror="true">
-            <arg path="ebcdic/setup.py" />
-            <arg value="test" />
+            <arg path="ebcdic/setup.py"/>
+            <arg value="test"/>
         </exec>
     </target>
 </project>

@@ -35,12 +35,27 @@ The resulting mapping file is stored in `iso-8859-15.txt`. The generated mapping
 are located in the same folder and have names like
 `iso-8859.15.mapping`.
 
+
 EBCDIC codecs for Python
 ------------------------
 
 As an example usage, CodecMapper can provide additional EBCDIC codecs for
 Python, which can easily be packaged and distributed.
 
+To test the Python codecs you need to setup a Pythen venv:
+
+```sh
+$ python -m venv venv
+$ source venv/bin/activate
+$ pip install --upgrade pip
+$ pip install pycodestyle
+```
+
+After that you can build the Python codecs and run the tests:
+
+```sh
+$ ant test
+```
 For more information, browse the "ebcdic" folder of this distribution and
 take a look at the README.rst.
 

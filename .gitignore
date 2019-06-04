@@ -11,3 +11,4 @@ build
 dist
 ebcdic/ebcdic/cp*.*
 ebcdic/ebcdic/temp/
+/venv/
