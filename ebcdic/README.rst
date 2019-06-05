@@ -39,7 +39,7 @@ The ``ebcdic`` package includes EBCDIC codecs for the following regions:
 * cp290 - Japan (Katakana)
 * cp420 - Arabic bilingual
 * cp424 - Israel (Hebrew)
-* cp833 - Korea Extended
+* cp833 - Korea Extended (single byte)
 * cp838 - Thailand
 * cp870 - Eastern Europe (Poland, Hungary, Czech, Slovakia, Slovenia,
   Croatian, Serbia, Bulgarian); represents Latin-2
@@ -54,6 +54,9 @@ The ``ebcdic`` package includes EBCDIC codecs for the following regions:
 * cp1146 - Great Britain, Ireland, North Ireland
 * cp1147 - France
 * cp1148 - International
+* cp1148ms - International, Microsoft interpretation; similar to cp1148
+  except that 0x15 is mapped to 0x85 ("next line") instead if 0x0a
+  ("linefeed")
 * cp1149 - Iceland
 
 It also includes legacy codecs:
@@ -69,7 +72,10 @@ It also includes legacy codecs:
 * cp285 - Great Britain, Ireland, North Ireland; similar to cp1146 but
   without Euro sign
 * cp297 - France; similar to cp1147 but without Euro sign
-* cp500 - international; similar to cp1140 but without Euro sign
+* cp500 - International; similar to cp1148 but without Euro sign
+* cp500ms - International, Microsoft interpretation; identical to
+  codecs.cp500 similar to ebcdic.cp500 except that 0x15 is mapped to 0x85
+  ("next line") instead if 0x0a ("linefeed")
 * cp871 - Iceland; similar to cp1149 but without Euro sign
 * cp875 - Greece;  similar to cp9067 but without Euro sign and a few
   other characters
@@ -77,7 +83,7 @@ It also includes legacy codecs:
 * cp1047 - Open Systems (MVS C compiler)
 * cp1112 - Estonia, Latvia, Lithuania (Baltic)
 * cp1122 - Estonia;  similar to cp1157 but without Euro sign
-* cp4971 - Greece;  similar to cp9067 but without Euro sign
+* cp1123 - Ukraine; similar to cp1158 but without Euro sign
 
 Codecs in the standard library overrule some of these codecs. At the time of
 this writing this concerns cp037, cp273 (since 3.4), cp500 and cp1140.
@@ -93,9 +99,9 @@ the result is::
 Unsupported codecs
 ------------------
 
-According to 
-https://www-01.ibm.com/software/globalization/ccsid/ccsid_registered.html,
-there are additional codecs this package does not support yet. Possibly
+According to a
+`comprehensive list of code pages <https://www.aivosto.com/articles/charsets-codepages.html>`_,
+there are additional codecs this package does not support yet. Possible
 reasons and solutions are:
 
 1. It's a double byte codec, e.g. cp834 (Korea). Technically ``CodecMapper``
@@ -142,7 +148,7 @@ further steps are needed.
 License
 -------
 
-Copyright (c) 2014 - 2015, Thomas Aglassinger
+Copyright (c) 2014 - 2019, Thomas Aglassinger
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -171,19 +177,28 @@ POSSIBILITY OF SUCH DAMAGE.
 Changes
 -------
 
-Version 1.0, 2019-06-05
+Version 1.0, 2019-06-06
 
 * Changed development status to "Production/Stable".
+* Added international code pages cp500ms and cp1148ms which are the Microsoft
+  interpretations of the respective IBM code pages. The only difference is
+  that 0x1f is mapped to 0x85 ("next line") instead of 0x0a ("new line").
+  Note that codecs.cp500 included with the Python standard library also uses
+  the Microsoft interpretation (#4).
 * Added Arabian bilingual code page 420.
-* Added Arabic/Latin code page 421.
-* Added Cyrillic code page 410 and 1025.
+* Added Baltic code page 1112.
+* Added Cyrillic code page 1025.
+* Added Eastern Europe code page 870.
 * Added Estonian code pages 1122 and 1157.
-* Added Greek code pages 875, 4971 and 9067.
+* Added Greek code page 875.
+* Added Farsi Bilingual code page 1097.
 * Added Hebrew code page 424 and 803.
 * Added Korean code page 833.
 * Added Meahreb/French code page 425.
 * Added Japanese (Katakana) code page 290.
+* Added Thailand code page 838.
 * Added Turkish code page 322.
+* Added Ukraine code page 1123.
 * Added Python 3.5 to 3.8 as supported version.
 * Improved PEP8 conformance of generated codecs.
 
