@@ -31,7 +31,7 @@
         <delete dir="${dist}" includeemptydirs="true" quiet="true"/>
         <delete includeemptydirs="true" quiet="true">
             <fileset dir="${basedir}" includes="**.mapping, **/.pyc, **.pyo, __pycache__"/>
-            <fileset dir="ebcdic/ebcdic" includes="cp*.*"/>
+            <fileset dir="ebcdic/ebcdic" includes="cp*.*" excludes="cp*ms.py"/>
         </delete>
         <delete dir="ebcdic/ebcdic/temp" includeemptydirs="true" quiet="true"/>
         <exec executable="${python}" dir="ebcdic" failonerror="true">
@@ -66,6 +66,7 @@
             <!-- <arg value="cp803" /> --><!-- Unavailable: Hebrew -->
             <arg value="cp833"/>
             <!-- <arg value="cp834" /> --><!-- TODO: Korea (16 Bit) -->
+            <arg value="cp838"/>
             <arg value="cp870"/>
             <arg value="cp871"/>
             <arg value="cp875"/>

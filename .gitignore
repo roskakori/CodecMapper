@@ -10,5 +10,6 @@
 build
 dist
 ebcdic/ebcdic/cp*.*
+!/ebcdic/ebcdic/cp*ms.py
 ebcdic/ebcdic/temp/
 /venv/

@@ -30,7 +30,7 @@ class EbcdicTest(unittest.TestCase):
             self.assertEqual(text, recoded_text, '%s: %r != %r' % (codec_name, text, recoded_text))
 
     def test_can_recode_euro_sign(self):
-        self._test_can_recode('\N{EURO SIGN}', ['cp1141', 'cp1148'])
+        self._test_can_recode('\N{EURO SIGN}', ['cp1141', 'cp1148', 'cp1148ms'])
 
     def test_has_ignored_codec_names(self):
         self.assertTrue('cp500' in ebcdic.ignored_codec_names())
@@ -41,7 +41,7 @@ class EbcdicTest(unittest.TestCase):
         self.assertNotEqual(ebcdic_cp500, standard_cp500)
 
     def test_fails_on_lookup_of_unknown_ebcdic_codec(self):
-        self.assertRaises(LookupError, ebcdic.lookup, 'cpXXX')
+        self.assertRaises(LookupError, ebcdic.lookup, 'cpNone')
 
     def test_ignored_codecs_are_identical_to_standard_library(self):
         def encoded(code, codec):
