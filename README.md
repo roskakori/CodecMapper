@@ -72,4 +72,5 @@ License
 Copyright (c) 2013 - 2019, Thomas Aglassinger
 All rights reserved.
 
-Distributed under the BSD license, see [LICENSE.txt]() for more information.
+Distributed under the BSD license, see [LICENSE.txt](LICENSE.txt) for more
+information.
