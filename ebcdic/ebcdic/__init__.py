@@ -41,7 +41,7 @@ __all__ = [
     '__version__',
     '__version_info__'
 ]
-__version_info__ = (1, 0, 0)
+__version_info__ = (1, 0, 1)
 __version__ = '.'.join([str(item) for item in __version_info__])
 
 
