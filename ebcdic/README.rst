@@ -145,12 +145,20 @@ and ``ebcdic/__init__.py`` registers it during ``import ebcdic``, so no
 further steps are needed.
 
 
+
+
 Changes
 -------
+
+Version 1.0.2, 2019-07-31
+
+* Fixed OSError during installation (caused by initial implementation of #5).
+
 
 Version 1.0.1, 2019-07-31
 
 * Moved license information from README to LICENSE (#5).
+
 
 Version 1.0.0, 2019-06-06
 
