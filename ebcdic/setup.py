@@ -4,6 +4,12 @@ Setup for ebcdic package.
 Developer cheat sheet
 ---------------------
 
+Bump version number:
+
+  1. Possibly update copyright year in README.rst and LICENSE.txt.
+  2. Edit ebcdic/__init__.py:__version_info__.
+  3. Describe changes in README.rst.
+
 Upload release to PyPI::
 
   $ ant test
@@ -12,7 +18,7 @@ Upload release to PyPI::
 
 Tag a release::
 
-  $ git tag -a -m "Tagged version 1.x." v1.x
+  $ git tag -a -m "Tagged version 1.x.x." v1.x.x
   $ git push --tags
 
 """
@@ -22,43 +28,58 @@ from setuptools import setup
 
 import io
 import os
+import shutil
 
 import ebcdic
 
+# HACK: Copy the license from the top project folder to the ebcdic folder
+#  because ``data_files`` does not seem to work with files above the current
+#  folder.
+
 # Read the README text to use as long description.
-_package_folder = os.path.abspath(os.path.dirname(__file__))
-readme_path = os.path.join(_package_folder, 'README.rst')
+_PACKAGE_FOLDER = os.path.dirname(os.path.abspath(__file__))
+readme_path = os.path.join(_PACKAGE_FOLDER, 'README.rst')
 with io.open(readme_path, 'r', encoding='utf-8') as readme_file:
     long_description = readme_file.read()
 
-setup(
-    name='ebcdic',
-    version=ebcdic.__version__,
-    description='Additional EBCDIC codecs',
-    long_description=long_description,
-    url='https://pypi.python.org/pypi/ebcdic',
-    author='Thomas Aglassinger',
-    author_email='roskakori@users.sourceforge.net',
-    license='BSD',
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Intended Audience :: Developers',
-        'Topic :: Text Processing',
-        'License :: OSI Approved :: BSD License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.1',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-    ],
-    keywords='codec text unicode ebcdic',
-    packages=['ebcdic'],
-    test_suite='ebcdic.test.test_ebcdic'
-)
+_LICENSE_NAME = "LICENSE.txt"
+_PROJECT_FOLDER = os.path.dirname(_PACKAGE_FOLDER)
+_LICENSE_PATH = os.path.join(_PROJECT_FOLDER, _LICENSE_NAME)
+_COPIED_LICENSE_PATH = os.path.join(_PACKAGE_FOLDER, _LICENSE_NAME)
+shutil.copy(_LICENSE_PATH, os.path.basename(_LICENSE_PATH))
+
+try:
+    setup(
+        name='ebcdic',
+        version=ebcdic.__version__,
+        description='Additional EBCDIC codecs',
+        long_description=long_description,
+        url='https://pypi.python.org/pypi/ebcdic',
+        author='Thomas Aglassinger',
+        author_email='roskakori@users.sourceforge.net',
+        license='BSD',
+        classifiers=[
+            'Development Status :: 5 - Production/Stable',
+            'Intended Audience :: Developers',
+            'Topic :: Text Processing',
+            'License :: OSI Approved :: BSD License',
+            'Programming Language :: Python :: 2',
+            'Programming Language :: Python :: 2.6',
+            'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.1',
+            'Programming Language :: Python :: 3.2',
+            'Programming Language :: Python :: 3.3',
+            'Programming Language :: Python :: 3.4',
+            'Programming Language :: Python :: 3.5',
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
+        ],
+        keywords='codec text unicode ebcdic',
+        packages=['ebcdic'],
+        test_suite='ebcdic.test.test_ebcdic',
+        data_files=[("", [os.path.basename(_LICENSE_PATH)])],
+    )
+finally:
+    os.remove(_COPIED_LICENSE_PATH)
