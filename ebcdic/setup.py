@@ -12,9 +12,17 @@ Bump version number:
 
 Upload release to PyPI::
 
+  $ git checkout master
+  $ git pull
   $ ant test
   $ cd ebcdic
   $ python setup.py sdist --formats=zip upload
+
+Update production branch::
+
+  $ git checkout production
+  $ git merge master
+  $ git push
 
 Tag a release::
 
@@ -66,5 +74,6 @@ setup(
     ],
     keywords='codec text unicode ebcdic',
     packages=['ebcdic'],
+    data_files=[("", ["LICENSE.txt"])],
     test_suite='ebcdic.test.test_ebcdic',
 )

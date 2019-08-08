@@ -8,7 +8,6 @@
 *.war
 build
 dist
-ebcdic/LICENSE.txt
 ebcdic/ebcdic/cp*.*
 !/ebcdic/ebcdic/cp*ms.py
 ebcdic/ebcdic/temp/
