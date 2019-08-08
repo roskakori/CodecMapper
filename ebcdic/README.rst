@@ -150,6 +150,12 @@ further steps are needed.
 Changes
 -------
 
+Version 1.0.3, 2019-08-08
+
+* Fixed ValueError during installation on Windows. Apparently the
+  ``license_file`` metadata are generally broken on this platform. Now the
+  license is included as a simple ``data_file``.
+
 Version 1.0.2, 2019-07-31
 
 * Fixed OSError during installation (caused by initial implementation of #5).

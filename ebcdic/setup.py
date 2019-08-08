@@ -66,5 +66,6 @@ setup(
     ],
     keywords='codec text unicode ebcdic',
     packages=['ebcdic'],
+    data_files=[("", ["LICENSE.txt"])],
     test_suite='ebcdic.test.test_ebcdic',
 )
