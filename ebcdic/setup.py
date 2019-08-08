@@ -40,7 +40,7 @@ import os
 import ebcdic
 
 # Read the README text to use as long description.
-_PACKAGE_FOLDER = os.path.dirname(os.path.abspath(__file__))
+_PACKAGE_FOLDER = os.path.dirname(__file__)
 readme_path = os.path.join(_PACKAGE_FOLDER, 'README.rst')
 with io.open(readme_path, 'r', encoding='utf-8') as readme_file:
     long_description = readme_file.read()
