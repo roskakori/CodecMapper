@@ -48,7 +48,7 @@ To test the Python codecs you need to setup a Pythen venv:
 $ python -m venv venv
 $ source venv/bin/activate
 $ pip install --upgrade pip
-$ pip install pycodestyle
+$ pip install pycodestyle wheel
 ```
 
 After that you can build the Python codecs and run the tests:

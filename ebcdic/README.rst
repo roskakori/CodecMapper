@@ -2,7 +2,7 @@ ebcdic
 ======
 
 ``ebcdic`` is a Python package adding additional EBCDIC codecs for data
-exchange with legacy system. It works with Python 2.6+ and Python 3.1+.
+exchange with legacy system. It works with Python 2.7 and Python 3.4+.
 
 `EBCDIC <https://en.wikipedia.org/wiki/EBCDIC>`_ is short for Extended Binary
 Coded Decimal Interchange Code and is a family of character encodings that is
@@ -145,16 +145,26 @@ and ``ebcdic/__init__.py`` registers it during ``import ebcdic``, so no
 further steps are needed.
 
 
-
-
 Changes
 -------
+
+Version 1.1.0, 2019-08-08
+
+* Fixed ValueError during installation on Windows by changing the distribution
+  format from sdist to wheel. Apparently sdist is not meant to work across
+  platforms.
+
+  Sadly this breaks compatibility with Python 2.6, 3.1, 3.2 and 3.3. If you
+  still need ``ebcdic`` with one of these Python versions, use
+  ``ebcdic-1.0.0`` (#11).
+
 
 Version 1.0.3, 2019-08-08
 
 * Fixed ValueError during installation on Windows. Apparently the
   ``license_file`` metadata are generally broken on this platform. Now the
-  license is included as a simple ``data_file``.
+  license is included as a simple ``data_file`` (#11).
+
 
 Version 1.0.2, 2019-07-31
 
