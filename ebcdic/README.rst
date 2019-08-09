@@ -148,33 +148,21 @@ further steps are needed.
 Changes
 -------
 
-Version 1.1.0, 2019-08-09
+Version 1.1.1, 2019-08-09
 
-* Fixed ValueError during installation on Windows by changing the distribution
-  format from sdist to wheel. Apparently sdist is not meant to work across
-  platforms.
+* Moved license information from README to LICENSE (#5). This required the
+  distribution to change from sdist to wheel because apparently it is a
+  major challenge to include a text file in a platform independent way (#11).
 
   Sadly this breaks compatibility with Python 2.6, 3.1, 3.2 and 3.3. If you
   still need ``ebcdic`` with one of these Python versions, use
-  ``ebcdic-1.0.0`` (#11).
+  ``ebcdic-1.0.0``.
 
-
-Version 1.0.3, 2019-08-08
-
-* Attempted to fix ValueError during installation on Windows. Apparently the
-  ``license_file`` metadata are generally broken on this platform. Now the
-  license is included as a simple ``data_file`` (#11).
-
-
-Version 1.0.2, 2019-07-31
-
-* Fixed OSError during installation (caused by initial implementation of #5).
-
-
-Version 1.0.1, 2019-07-31
-
-* Moved license information from README to LICENSE (#5).
-
+  This took several attempts and intermediate releases that where broken in
+  different ways on different platforms. To prevent people from accidentally
+  installing one of these broken releases they have been removed from PyPI.
+  If you still want to take a look at them, use the
+  `respective tags <https://github.com/roskakori/CodecMapper/releases>`_.
 
 Version 1.0.0, 2019-06-06
 
