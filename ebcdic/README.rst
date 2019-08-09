@@ -148,7 +148,7 @@ further steps are needed.
 Changes
 -------
 
-Version 1.1.0, 2019-08-08
+Version 1.1.0, 2019-08-09
 
 * Fixed ValueError during installation on Windows by changing the distribution
   format from sdist to wheel. Apparently sdist is not meant to work across

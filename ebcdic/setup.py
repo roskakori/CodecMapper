@@ -6,7 +6,12 @@ Developer cheat sheet
 
 Bump version number:
 
-  1. Possibly update copyright year in README.rst and LICENSE.txt.
+  1. Possibly update copyright year in:
+
+     * ebcdic/__init__.py
+     * LICENSE.txt and
+     * README.rst
+
   2. Edit ebcdic/__init__.py:__version_info__.
   3. Describe changes in README.rst.
 
