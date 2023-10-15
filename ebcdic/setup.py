@@ -37,7 +37,7 @@ Tag a release::
 """
 from __future__ import absolute_import
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 import io
 import os
@@ -74,6 +74,8 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     keywords='codec text unicode ebcdic',
-    packages=['ebcdic'],
+    packages=find_packages(
+        exclude=['ebcdic.test*', 'ebcdisc.examples*'],
+    ),
     test_suite='ebcdic.test.test_ebcdic',
 )
