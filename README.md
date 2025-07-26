@@ -42,15 +42,7 @@ EBCDIC codecs for Python
 As an example usage, CodecMapper can provide additional EBCDIC codecs for
 Python, which can easily be packaged and distributed.
 
-To test the Python codecs you need to setup a Pythen venv:
-
-```sh
-$ python -m venv venv
-$ source venv/bin/activate
-$ pip install --upgrade pip
-$ pip install pycodestyle wheel
-```
-
+To test the Python codecs, first install [uv](https://docs.astral.sh/uv/getting-started/installation/).
 After that you can build the Python codecs and run the tests:
 
 ```sh

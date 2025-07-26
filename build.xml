@@ -34,10 +34,6 @@
             <fileset dir="ebcdic/ebcdic" includes="cp*.*" excludes="cp*ms.py"/>
         </delete>
         <delete dir="ebcdic/ebcdic/temp" includeemptydirs="true" quiet="true"/>
-        <exec executable="${python}" dir="ebcdic" failonerror="true">
-            <arg path="ebcdic/setup.py"/>
-            <arg value="clean"/>
-        </exec>
     </target>
 
     <target name="ebcdic" description="build ebcdic package for Python" depends="dist">
@@ -96,7 +92,8 @@
             <!-- <arg value="cp4971" /> --><!-- Unavailable: Greece -->
             <!-- <arg value="cp9067" /> --><!-- Unavailable: Greece -->
         </java>
-        <exec executable="${python}" dir="ebcdic/ebcdic" failonerror="true">
+        <exec executable="uv" dir="ebcdic/ebcdic" failonerror="true">
+            <arg value="run"/>
             <arg value="${basedir}/tools/gencodec.py"/>
             <arg value="temp"/>
         </exec>
@@ -104,12 +101,11 @@
             <fileset dir="ebcdic/ebcdic" includes="*.mapping, temp"/>
             <fileset dir="ebcdic/ebcdic/temp"/>
         </delete>
-        <exec executable="${python}" dir="ebcdic" failonerror="true">
-            <arg path="ebcdic/setup.py"/>
-            <arg value="sdist"/>
-            <arg value="--dist-dir"/>
+        <exec executable="uv" dir="ebcdic" failonerror="true">
+            <arg value="build"/>
+            <arg value="--out-dir"/>
             <arg path="${dist}"/>
-            <arg value="--formats=zip"/>
+            <arg value="--sdist"/>
         </exec>
     </target>
 

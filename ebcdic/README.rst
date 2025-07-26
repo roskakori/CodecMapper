@@ -140,7 +140,7 @@ Then run::
 
 to build and test the distribution.
 
-The ``ebcdic/setup.py`` automatically includes the new encoding in the package
+The ``ebcdic/pyproject.toml`` automatically includes the new encoding in the package
 and ``ebcdic/__init__.py`` registers it during ``import ebcdic``, so no
 further steps are needed.
 

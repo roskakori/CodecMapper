@@ -28,8 +28,10 @@ For more information, visit <https://pypi.python.org/pypi/ebcdic/>.
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 from __future__ import absolute_import
+
 import codecs
 
+from ._version import __version__, __version_info__
 
 __all__ = [
     'codec_names',
@@ -38,8 +40,7 @@ __all__ = [
     '__version__',
     '__version_info__'
 ]
-__version_info__ = (1, 1, 1)
-__version__ = '.'.join([str(item) for item in __version_info__])
+
 
 
 def _codec_names():
