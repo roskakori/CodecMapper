@@ -27,7 +27,6 @@ For more information, visit <https://pypi.python.org/pypi/ebcdic/>.
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-from __future__ import absolute_import
 
 import codecs
 
@@ -90,7 +89,7 @@ def lookup(codec_name):
     """
     result = _find_ebcdic_codec(codec_name)
     if result is None:
-        raise LookupError('EBCDIC codec is %r but must be one of: %s' % (codec_name, codec_names))
+        raise LookupError(f'EBCDIC codec is {codec_name!r} but must be one of: {codec_names}')
     return result
 
 

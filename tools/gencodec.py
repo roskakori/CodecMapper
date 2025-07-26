@@ -28,7 +28,10 @@ Modified by Thomas Aglassinger for improved PEP8 conformance of the
 generated code.
 """
 
-import re, os, marshal, codecs
+import codecs
+import marshal
+import os
+import re
 
 # Maximum allowed size of charmap tables
 MAX_TABLE_SIZE = 8192
@@ -74,9 +77,8 @@ def parsecodes(codes, len=len, range=range):
 
 
 def readmap(filename):
-    f = open(filename, 'r')
-    lines = f.readlines()
-    f.close()
+    with open(filename) as f:
+        lines = f.readlines()
     enc2uni = {}
     identity = []
     unmapped = list(range(256))
@@ -100,10 +102,7 @@ def readmap(filename):
         enc, uni, comment = m.groups()
         enc = parsecodes(enc)
         uni = parsecodes(uni)
-        if comment is None:
-            comment = ''
-        else:
-            comment = comment[1:].strip()
+        comment = '' if comment is None else comment[1:].strip()
         if enc < 256:
             if enc in unmapped:
                 unmapped.remove(enc)
@@ -129,13 +128,12 @@ def hexrepr(t, precision=4):
         return 'None'
     try:
         len(t)
-    except:
-        return '0x%0*X' % (precision, t)
+    except TypeError:
+        return f'0x{t:0{precision}X}'
     try:
-        return '(' + ', '.join(['0x%0*X' % (precision, item)
-                                for item in t]) + ')'
+        return '(' + ', '.join([f'0x{item:0{precision}X}' for item in t]) + ')'
     except TypeError as why:
-        print('* failed to convert %r: %s' % (t, why))
+        print(f'* failed to convert {t!r}: {why}')
         raise
 
 
@@ -143,14 +141,13 @@ def python_mapdef_code(varname, map, comments=1, precisions=(2, 4)):
     l = []
     append = l.append
     if "IDENTITY" in map:
-        append("%s = codecs.make_identity_dict(range(%d))" %
-               (varname, map["IDENTITY"]))
-        append("%s.update({" % varname)
+        append(f"{varname} = codecs.make_identity_dict(range({map['IDENTITY']}))")
+        append(f"{varname}.update({{")
         splits = 1
         del map["IDENTITY"]
         identity = 1
     else:
-        append("%s = {" % varname)
+        append(f"{varname} = {{")
         splits = 0
         identity = 0
 
@@ -174,9 +171,9 @@ def python_mapdef_code(varname, map, comments=1, precisions=(2, 4)):
         key = hexrepr(mapkey, key_precision)
         value = hexrepr(mapvalue, value_precision)
         if mapcomment and comments:
-            append('    %s: %s,\t#  %s' % (key, value, mapcomment))
+            append(f'    {key}: {value},\t#  {mapcomment}')
         else:
-            append('    %s: %s,' % (key, value))
+            append(f'    {key}: {value},')
         i += 1
         if i == 4096:
             # Split the definition into parts to that the Python
@@ -185,7 +182,7 @@ def python_mapdef_code(varname, map, comments=1, precisions=(2, 4)):
                 append('}')
             else:
                 append('})')
-            append('%s.update({' % varname)
+            append(f'{varname}.update({{')
             i = 0
             splits = splits + 1
     if splits == 0:
@@ -199,7 +196,7 @@ def python_mapdef_code(varname, map, comments=1, precisions=(2, 4)):
 def python_tabledef_code(varname, map, comments=1, key_precision=2):
     l = []
     append = l.append
-    append('%s = (' % varname)
+    append(f'{varname} = (')
 
     # Analyze map and create table dict
     mappings = sorted(map.items())
@@ -242,11 +239,9 @@ def python_tabledef_code(varname, map, comments=1, key_precision=2):
                 mapchar = chr(mapvalue)
         if mapcomment and comments:
             mapchar_as_source = ascii(mapchar)
-            append('    %s \t# %s -> %s' % (mapchar_as_source,
-                                            hexrepr(key, key_precision),
-                                            mapcomment))
+            append(f'    {mapchar_as_source} \t# {hexrepr(key, key_precision)} -> {mapcomment}')
         else:
-            append('    %s' % mapchar_as_source)
+            append(f'    {mapchar_as_source}')
 
     append(')')
     return l
@@ -273,17 +268,12 @@ def codegen(name, map, encodingname, comments=1):
         comments=comments,
         precisions=(4, 2))
 
-    if decoding_table_code:
-        suffix = 'table'
-    else:
-        suffix = 'map'
+    suffix = 'table' if decoding_table_code else 'map'
 
     l = [
-        '''""" 
-Python Character Mapping Codec %s generated from '%s' with gencodec.py.
+        f'''""" 
+Python Character Mapping Codec {encodingname} generated from '{name}' with gencodec.py.
 """
-# Ensure the generated codec works with Python 2.6+.
-from __future__ import unicode_literals
 
 import codecs
 
@@ -291,22 +281,21 @@ import codecs
 # Codec APIs
 class Codec(codecs.Codec):
     def encode(self, text, errors='strict'):
-        return codecs.charmap_encode(text, errors, encoding_%s)
+        return codecs.charmap_encode(text, errors, encoding_{suffix})
 
     def decode(self, data, errors='strict'):
-        return codecs.charmap_decode(data, errors, decoding_%s)
-''' % (encodingname, name, suffix, suffix)]
-    l.append('''\
+        return codecs.charmap_decode(data, errors, decoding_{suffix})
+''']
+    l.append(f'''\
 
 class IncrementalEncoder(codecs.IncrementalEncoder):
     def encode(self, text, final=False):
-        return codecs.charmap_encode(text, self.errors, encoding_%s)[0]
+        return codecs.charmap_encode(text, self.errors, encoding_{suffix})[0]
 
 
 class IncrementalDecoder(codecs.IncrementalDecoder):
     def decode(self, data, final=False):
-        return codecs.charmap_decode(data, self.errors, decoding_%s)[0]''' %
-             (suffix, suffix))
+        return codecs.charmap_decode(data, self.errors, decoding_{suffix})[0]''')
 
     l.append('''
 
@@ -321,7 +310,7 @@ class StreamReader(Codec, codecs.StreamReader):
 # encodings module API
 def getregentry():
     return codecs.CodecInfo(
-        name=%r,
+        name={!r},
         encode=Codec().encode,
         decode=Codec().decode,
         incrementalencoder=IncrementalEncoder,
@@ -329,7 +318,7 @@ def getregentry():
         streamreader=StreamReader,
         streamwriter=StreamWriter,
     )
-''' % encodingname.replace('_', '-'))
+'''.format(encodingname.replace('_', '-')))
 
     # Add decoding table or map (with preference to the table)
     if not decoding_table_code:
@@ -361,18 +350,16 @@ encoding_table = codecs.charmap_build(decoding_table)
 
 def pymap(name, map, pyfile, encodingname, comments=1):
     code = codegen(name, map, encodingname, comments)
-    f = open(pyfile, 'w')
-    f.write(code)
-    f.close()
+    with open(pyfile, 'w') as f:
+        f.write(code)
 
 
 def marshalmap(name, map, marshalfile):
     d = {}
     for e, (u, c) in map.items():
         d[e] = (u, c)
-    f = open(marshalfile, 'wb')
-    marshal.dump(d, f)
-    f.close()
+    with open(marshalfile, 'wb') as f:
+        marshal.dump(d, f)
 
 
 def convertdir(dir, dirprefix='', nameprefix='', comments=1):
@@ -388,9 +375,7 @@ def convertdir(dir, dirprefix='', nameprefix='', comments=1):
         name = nameprefix + name
         codefile = name + '.py'
         marshalfile = name + '.mapping'
-        print('converting %s to %s and %s' % (mapname,
-                                              dirprefix + codefile,
-                                              dirprefix + marshalfile))
+        print(f'converting {mapname} to {dirprefix + codefile} and {dirprefix + marshalfile}')
         try:
             map = readmap(os.path.join(dir, mapname))
             if not map:
@@ -399,7 +384,7 @@ def convertdir(dir, dirprefix='', nameprefix='', comments=1):
                 pymap(mappathname, map, dirprefix + codefile, name, comments)
                 marshalmap(mappathname, map, dirprefix + marshalfile)
         except ValueError as why:
-            print('* conversion failed: %s' % why)
+            print(f'* conversion failed: {why}')
             raise
 
 
@@ -410,17 +395,16 @@ def rewritepythondir(dir, dirprefix='', comments=1):
             continue
         name = mapname[:-len('.mapping')]
         codefile = name + '.py'
-        print('converting %s to %s' % (mapname,
-                                       dirprefix + codefile))
+        print(f'converting {mapname} to {dirprefix + codefile}')
         try:
-            map = marshal.load(open(os.path.join(dir, mapname),
-                                    'rb'))
+            with open(os.path.join(dir, mapname), 'rb') as f:
+                map = marshal.load(f)
             if not map:
                 print('* map is empty; skipping')
             else:
                 pymap(mapname, map, dirprefix + codefile, name, comments)
         except ValueError as why:
-            print('* conversion failed: %s' % why)
+            print(f'* conversion failed: {why}')
 
 
 if __name__ == '__main__':

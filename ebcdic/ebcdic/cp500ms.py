@@ -3,8 +3,6 @@ Python Character Mapping Codec cp500 generated from 'temp/cp500.txt' with gencod
 and manually modified to map 0x15 to 0x85 similar to the Microsoft interpretation of
 cp500 that is included with the Python standard library.
 """
-# Ensure the generated codec works with Python 2.6+.
-from __future__ import unicode_literals
 
 import codecs
 

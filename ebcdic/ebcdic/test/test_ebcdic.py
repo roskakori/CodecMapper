@@ -1,15 +1,11 @@
 """
 Basic test for `ebcdic` package.
 """
-from __future__ import absolute_import
 
 import codecs
-import sys
 import unittest
 
 import ebcdic
-
-_IS_PYTHON2 = sys.version_info[0] == 2
 
 
 class EbcdicTest(unittest.TestCase):
@@ -27,7 +23,7 @@ class EbcdicTest(unittest.TestCase):
         for codec_name in codec_names:
             encoded_text = text.encode(codec_name)
             recoded_text = encoded_text.decode(codec_name)
-            self.assertEqual(text, recoded_text, '%s: %r != %r' % (codec_name, text, recoded_text))
+            self.assertEqual(text, recoded_text, f'{codec_name}: {text!r} != {recoded_text!r}')
 
     def test_can_recode_euro_sign(self):
         self._test_can_recode('\N{EURO SIGN}', ['cp1141', 'cp1148', 'cp1148ms'])
@@ -45,10 +41,7 @@ class EbcdicTest(unittest.TestCase):
 
     def test_ignored_codecs_are_identical_to_standard_library(self):
         def encoded(code, codec):
-            if _IS_PYTHON2:
-                result = unicode(chr(code), codec.name, errors='replace')
-            else:
-                result = chr(code).encode(codec.name, errors='replace')
+            return chr(code).encode(codec.name, errors='replace')
 
         for codec_name in ebcdic.ignored_codec_names():
             ebcdic_codec = ebcdic.lookup(codec_name)
@@ -58,8 +51,11 @@ class EbcdicTest(unittest.TestCase):
             for code in range(256):
                 ebcdic_char = encoded(code, ebcdic_codec)
                 standard_char = encoded(code, standard_codec)
-                self.assertEqual(ebcdic_char, standard_char, '%s at %d: %r != %r'
-                                 % (codec_name, code, ebcdic_char, standard_char))
+                self.assertEqual(
+                    ebcdic_char,
+                    standard_char,
+                    f"{codec_name} at {code}: {ebcdic_char!r} != {standard_char!r}",
+                )
 
 
 if __name__ == '__main__':

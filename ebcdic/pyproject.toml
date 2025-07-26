@@ -24,6 +24,16 @@ dynamic = ["version"]
 [project.urls]
 Homepage = "https://pypi.python.org/pypi/ebcdic"
 
+[dependency-groups]
+dev = ["pytest>=8.4.1", "ruff>=0.12.5"]
+
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
+ignore = ["E741"]
+
 [build-system]
 requires = ["flit_core>=3.11,<4"]
 build-backend = "flit_core.buildapi"

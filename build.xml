@@ -2,7 +2,6 @@
     <description>
         Build CodecMapper and additional codecs for Python.
     </description>
-    <property name="python" value="${basedir}/venv/bin/python"/>
     <property name="source" location="source"/>
     <property name="build" location="build"/>
     <property name="dist" location="dist"/>
@@ -115,22 +114,18 @@
         </java>
     </target>
 
-    <target name="pep8" description="validate Python code style">
-        <exec executable="pycodestyle" failonerror="true">
-            <arg path="ebcdic/setup.py"/>
-            <arg value="--config"/>
-            <arg path="ebcdic/setup.cfg"/>
-            <arg value="--max-line-length=120"/>
-            <arg path="ebcdic/setup.py"/>
-            <arg path="ebcdic/ebcdic/__init__.py"/>
-            <arg path="ebcdic/ebcdic/test/test_ebcdic.py"/>
+    <target name="lint" description="validate Python code style">
+        <exec executable="uv" dir="ebcdic" failonerror="true">
+            <arg value="run"/>
+            <arg value="ruff"/>
+            <arg value="check"/>
         </exec>
     </target>
 
-    <target name="test" description="run test suite" depends="ebcdic, pep8">
-        <exec executable="${python}" dir="ebcdic" failonerror="true">
-            <arg path="ebcdic/setup.py"/>
-            <arg value="test"/>
+    <target name="test" description="run test suite" depends="ebcdic, lint">
+        <exec executable="uv" dir="ebcdic" failonerror="true">
+            <arg value="run"/>
+            <arg value="pytest"/>
         </exec>
     </target>
 </project>
