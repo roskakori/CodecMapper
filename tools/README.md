@@ -1,5 +1,4 @@
-gencodec.py
------------
+## gencodec.py
 
 `gencodec.py` is a script originally included with the source code
 distribution of Python 3.2. It converts mappings produced by CodecMapper to a

@@ -1,23 +1,18 @@
-CodecMapper
-===========
+# CodecMapper
 
 CodecMapper derives mapping files from Java Charsets which can be processed
 by Python's gencodec.py.
 
-
-Requirements
-------------
+## Requirements
 
 To build and run CodecMapper, you need:
 
-  1. Java 1.7 or later
-  2. ant 1.8 or later, available from https://ant.apache.org/.
+1. Java 1.7 or later
+2. ant 1.8 or later, available from https://ant.apache.org/.
 
 It might also work with earlier versions of ant but this has not been tested.
 
-
-Usage
------
+## Usage
 
 To build CodecMapper, run:
 
@@ -35,9 +30,7 @@ The resulting mapping file is stored in `iso-8859-15.txt`. The generated mapping
 are located in the same folder and have names like
 `iso-8859.15.mapping`.
 
-
-EBCDIC codecs for Python
-------------------------
+## EBCDIC codecs for Python
 
 As an example usage, CodecMapper can provide additional EBCDIC codecs for
 Python, which can easily be packaged and distributed.
@@ -48,18 +41,15 @@ After that you can build the Python codecs and run the tests:
 ```sh
 $ ant test
 ```
+
 For more information, browse the "ebcdic" folder of this distribution and
 take a look at the README.rst.
 
-
-Source code
------------
+## Source code
 
 See https://github.com/roskakori/CodecMapper.
 
-
-License
--------
+## License
 
 Copyright (c) 2013 - 2019, Thomas Aglassinger
 All rights reserved.
