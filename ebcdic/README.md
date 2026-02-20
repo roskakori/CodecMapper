@@ -107,7 +107,7 @@ to build and test the distribution.
 
 ## Changes
 
-Version 2.0.0, 2026-ß2-20
+Version 2.0.0, 2026-02-20
 
 This is a pure technical release that does not change the functionality of the package.
 
