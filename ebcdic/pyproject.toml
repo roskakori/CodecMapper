@@ -1,0 +1,39 @@
+[project]
+name = "ebcdic"
+description = "Additional EBCDIC codecs"
+keywords = ["codec", "text", "unicode", "ebcdic"]
+readme = "README.rst"
+authors = [
+    { name = "Thomas Aglassinger", email = "roskakori@users.sourceforge.net" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Text Processing",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+license = "BSD-2-Clause"
+requires-python = ">=3.9"
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://pypi.python.org/pypi/ebcdic"
+
+[dependency-groups]
+dev = ["pre-commit>=4.3.0", "pytest>=8.4.1", "ruff>=0.12.5"]
+
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
+ignore = ["E741"]
+
+[build-system]
+requires = ["flit_core>=3.11,<4"]
+build-backend = "flit_core.buildapi"
