@@ -2,7 +2,7 @@
 name = "ebcdic"
 description = "Additional EBCDIC codecs"
 keywords = ["codec", "text", "unicode", "ebcdic"]
-readme = "README.rst"
+readme = "README.md"
 authors = [
     { name = "Thomas Aglassinger", email = "roskakori@users.sourceforge.net" },
 ]
