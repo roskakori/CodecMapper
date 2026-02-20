@@ -1,3 +1,4 @@
+.DS_Store
 .idea
 *.class
 *.ear
@@ -9,6 +10,4 @@
 build
 dist
 /ebcdic/ebcdic/cp*.*
-!/ebcdic/ebcdic/cp*ms.py
 /ebcdic/ebcdic/temp/
-/venv/
