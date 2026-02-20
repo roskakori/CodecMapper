@@ -6,10 +6,10 @@ Bump version number:
 
    - `ebcdic/__init__.py`
    - `LICENSE.txt` and
-   - `README.rst`
+   - `README.md`
 
 2. Edit `ebcdic/_version.py:__version__`.
-3. Describe changes in `README.rst`.
+3. Describe changes in `README.md`.
 
 Upload release to PyPI::
 

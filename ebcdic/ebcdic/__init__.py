@@ -3,7 +3,7 @@ EBCDIC codecs for data exchange with legacy systems.
 
 For more information, visit <https://pypi.python.org/pypi/ebcdic/>.
 """
-# Copyright (c) 2013 - 2019, Thomas Aglassinger
+# Copyright (c) 2013 - 2026, Thomas Aglassinger
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
