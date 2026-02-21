@@ -43,7 +43,7 @@ $ ant test
 ```
 
 For more information, browse the "ebcdic" folder of this distribution and
-take a look at the README.rst.
+take a look at the [README](ebcdic/README.md).
 
 ## Source code
 
@@ -51,7 +51,7 @@ See https://github.com/roskakori/CodecMapper.
 
 ## License
 
-Copyright (c) 2013 - 2019, Thomas Aglassinger
+Copyright (c) 2013 - 2026, Thomas Aglassinger
 All rights reserved.
 
 Distributed under the BSD license, see [LICENSE.txt](LICENSE.txt) for more
