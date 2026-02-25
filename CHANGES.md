@@ -1,6 +1,6 @@
 # Changes
 
-## Version 2.0.0, 2026-02-23
+## Version 2.0.0, 2026-02-25
 
 This is a pure technical release that does not change the functionality of the package.
 
@@ -11,8 +11,10 @@ Because of this, support for Python 2 and Python 3.8 or older had to be dropped.
 In addition, the documentation has been cleaned up to better conform to the standard layout of modern open source projects (see [#25](https://github.com/roskakori/CodecMapper/issues/25):
 
 - The list of changes is now a separate `CHANGES.md` instead of part of the `ebcdic/README.md`.
-- The `CONTRIBUTING.md` now includes all the instructions to build the package and run tests. Before, they were spreadout accross the different `README` files.
+- The `CONTRIBUTING.md` now includes all the instructions to build the package and run tests. Before, they were spreadout across the different `README` files.
 - The main `README.md` is a concise overview pointing to the other parts of the documentation for details.
+
+And finally, you can now show your appreciation of this package by [donating to it](https://roskakori.at/donate/donate-python-ebcdic/).
 
 ## Version 1.1.1, 2019-08-09
 
