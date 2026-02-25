@@ -4,7 +4,7 @@
 
 This is a pure technical release that does not change the functionality of the package.
 
-It ensures that the package builds with a modern Python toolchain and continuous integration systems. For details, see [#8](https://github.com/roskakori/CodecMapper/issues/8), contributed by [Branch Vincent](https://github.com/branchv)). In addition, it cleans up some source files missing from the distribution (see [#17](https://github.com/roskakori/CodecMapper/issues/17)) and several minor issues in the documentation.
+It ensures that the package builds with a modern Python toolchain and continuous integration systems. For details, see [#8](https://github.com/roskakori/CodecMapper/issues/8), contributed by [Branch Vincent](https://github.com/branchv). In addition, it cleans up some source files missing from the distribution (see [#17](https://github.com/roskakori/CodecMapper/issues/17)) and several minor issues in the documentation.
 
 Because of this, support for Python 2 and Python 3.8 or older had to be dropped. If you are stuck with such a version, use [ebcdic 1.1.1](https://pypi.org/project/ebcdic/1.1.1/), which currently has the same functionality.
 
