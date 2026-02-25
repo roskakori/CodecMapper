@@ -23,10 +23,11 @@ dynamic = ["version"]
 
 [project.urls]
 Homepage = "https://pypi.python.org/pypi/ebcdic"
-Repository = "https://github.com/roskakori/CodecMapper.git"
+Source = "https://github.com/roskakori/CodecMapper.git"
 Documentation = "https://github.com/roskakori/CodecMapper/blob/master/ebcdic/README.md"
 "Issue Tracker" = "https://github.com/roskakori/CodecMapper/issues"
 Changes = "https://github.com/roskakori/CodecMapper/blob/master/CHANGES.md"
+Donate = "https://roskakori.at/donate/donate-python-ebcdic/"
 
 [dependency-groups]
 dev = ["pre-commit>=4.3.0", "pytest>=8.4.1", "ruff>=0.15.2"]
