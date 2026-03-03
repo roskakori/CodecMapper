@@ -6,9 +6,9 @@
 
 This package requires Python 3.9 or later.
 
-For compatibility with Python 2.7 to 3.3, use [version 1.1.1](https://pypi.org/project/ebcdic/1.1.1/).
+For compatibility with Python 2.7 or from 3.4 to 3.8, use [version 1.1.1](https://pypi.org/project/ebcdic/1.1.1/).
 
-For compatibility with Python 2.6 to 3.2, use [version 1.0.0](https://pypi.org/project/ebcdic/1.0.0/).
+For compatibility with Python 2.6 or from 3.1 to 3.3, use [version 1.0.0](https://pypi.org/project/ebcdic/1.0.0/).
 
 ## Installation
 

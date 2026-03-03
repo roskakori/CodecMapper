@@ -1,5 +1,9 @@
 # Changes
 
+## Version 2.0.1, 2026-03-03
+
+This is a pure documentation update that fixes the confusing description of version compatibility in the README (see [#31](https://github.com/roskakori/CodecMapper/issues/31)).
+
 ## Version 2.0.0, 2026-02-25
 
 This is a pure technical release that does not change the functionality of the package.
