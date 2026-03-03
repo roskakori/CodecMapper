@@ -116,7 +116,7 @@ $ git push
 Tag a release:
 
 ```console
-$ git tag --annotate --message "Tagged version 2.x.x." v2.x.x
+$ git tag --annotate --message "Tag version 2.x.x" v2.x.x
 $ git push --tags
 ```
 
